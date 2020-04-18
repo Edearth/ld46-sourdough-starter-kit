@@ -13,6 +13,7 @@ gravity_scale = 10.0
 continuous_cd = 1
 can_sleep = false
 script = ExtResource( 1 )
+SNAP_TO_DRAG_FORCE = 50.0
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.75, 0.75 )

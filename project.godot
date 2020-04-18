@@ -9,13 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "RigidBody2D",
+"class": "FluorParticle",
+"language": "GDScript",
+"path": "res://Assets/Scripts/FlourParticle.gd"
+}, {
 "base": "Node2D",
 "class": "Game",
 "language": "GDScript",
 "path": "res://Assets/Scripts/Game.gd"
+}, {
+"base": "RigidBody2D",
+"class": "WaterParticle",
+"language": "GDScript",
+"path": "res://Assets/Scripts/WaterParticle.gd"
 } ]
 _global_script_class_icons={
-"Game": ""
+"FluorParticle": "",
+"Game": "",
+"WaterParticle": ""
 }
 
 [application]

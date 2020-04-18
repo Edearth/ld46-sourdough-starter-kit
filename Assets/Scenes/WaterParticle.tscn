@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Scripts/WaterParticle.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Scenes/SlurryParticle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Sprites/particle.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 5.0
+
+[node name="WaterParticle" type="RigidBody2D"]
+z_index = 2
+mass = 0.00102041
+gravity_scale = 20.0
+continuous_cd = 2
+contacts_reported = 1
+contact_monitor = true
+script = ExtResource( 1 )
+slurryParticle = ExtResource( 2 )
+
+[node name="WaterParticleCollision" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.0588235, 0.509804, 0.87451, 0.392157 )
+z_index = 2
+texture = ExtResource( 3 )
+[connection signal="body_entered" from="." to="." method="_on_WaterParticle_body_entered"]
+[connection signal="input_event" from="." to="." method="_on_WaterParticle_input_event"]

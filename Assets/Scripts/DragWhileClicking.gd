@@ -21,7 +21,7 @@ func _physics_process(delta):
 		var dragInitialPoint : Vector2 = global_transform.xform(dragOffsetFromObjectCenter)
 		var distanceUntilDragPoint : Vector2 = mousePosition - dragInitialPoint
 		var distanceToMassCenter : Vector2 = mousePosition - position
-		var force : Vector2 = distanceUntilDragPoint*delta*SNAP_TO_DRAG_FORCE
+		var force : Vector2 = distanceUntilDragPoint * delta * SNAP_TO_DRAG_FORCE
 		apply_impulse(distanceUntilDragPoint, force)
 		apply_torque_impulse(distanceToMassCenter.cross(force))
 
