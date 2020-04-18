@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Scripts/DragWhileClicking.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Sprites/recipient.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Scripts/SpriteClickListener.gd" type="Script" id=3]
+
+[sub_resource type="PhysicsMaterial" id=1]
+friction = 0.95
+bounce = 0.1
+
+[node name="Container" type="RigidBody2D"]
+mass = 0.1
+physics_material_override = SubResource( 1 )
+can_sleep = false
+linear_damp = 10.9
+angular_damp = 9.0
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2( 0.75, 0.75 )
+polygon = PoolVector2Array( 90.8915, -118.542, 94.1426, -83.4297, 98.0441, 92.1333, 84.3892, 123.995, -84.0213, 122.694, -98.9767, 99.2859, -92.4743, -83.4297, -89.8734, -117.242, -80.1199, -95.1339, -89.2232, -81.479, -93.7748, 99.2859, -80.7701, 116.192, 80.4877, 115.542, 92.192, 94.7342, 88.2906, -81.479, 81.7882, -97.0846 )
+[connection signal="click" from="Sprite" to="." method="_on_Sprite_click"]
+[connection signal="release" from="Sprite" to="." method="_on_Sprite_release"]
