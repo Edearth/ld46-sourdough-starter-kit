@@ -11,7 +11,6 @@ radius = 5.0
 z_index = 2
 mass = 0.00102041
 gravity_scale = 20.0
-continuous_cd = 2
 contacts_reported = 1
 contact_monitor = true
 script = ExtResource( 1 )

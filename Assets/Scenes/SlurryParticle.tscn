@@ -10,7 +10,6 @@ radius = 5.0
 z_index = 2
 mass = 0.00102041
 gravity_scale = 20.0
-continuous_cd = 2
 script = ExtResource( 1 )
 
 [node name="SlurryParticleCollision" type="CollisionShape2D" parent="."]

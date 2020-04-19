@@ -24,6 +24,7 @@ bg_color = Color( 0.541176, 0.886275, 0.541176, 1 )
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
 _sourdoughParticleContainer = NodePath("EmptyContainer/InsideContainer")
+_yeastCounter = NodePath("UI/YeastCounter")
 
 [node name="Background" type="Sprite" parent="."]
 z_index = -10
@@ -61,7 +62,6 @@ airParticle = ExtResource( 11 )
 polygon = PoolVector2Array( -61.1342, -70.3316, -67.6185, -60.6051, -67.6185, 76.6463, -60.5938, 86.9131, 61.5276, 86.3728, 68.5522, 74.4849, 68.0119, -61.6859, 60.4469, -70.872 )
 
 [node name="FlourContainer" parent="." instance=ExtResource( 4 )]
-editor/display_folded = true
 visible = false
 position = Vector2( 520, 350 )
 
@@ -69,6 +69,7 @@ position = Vector2( 520, 350 )
 position = Vector2( 0, -10 )
 script = ExtResource( 5 )
 particleType = ExtResource( 6 )
+amount = 0.0
 
 [node name="Shadow" type="Sprite" parent="FlourContainer"]
 position = Vector2( 0, 90 )
@@ -78,7 +79,6 @@ script = ExtResource( 9 )
 FIXED_HEIGHT = 450.0
 
 [node name="WaterContainer" parent="." instance=ExtResource( 4 )]
-editor/display_folded = true
 visible = false
 position = Vector2( 752.355, 350 )
 
@@ -86,6 +86,7 @@ position = Vector2( 752.355, 350 )
 position = Vector2( 0, -10 )
 script = ExtResource( 5 )
 particleType = ExtResource( 7 )
+amount = 0.0
 
 [node name="Shadow" type="Sprite" parent="WaterContainer"]
 position = Vector2( 0, 90 )
@@ -109,7 +110,6 @@ position = Vector2( 530, -380 )
 shape = SubResource( 2 )
 
 [node name="UI" type="Control" parent="."]
-editor/display_folded = true
 margin_left = 20.0
 margin_right = 40.0
 margin_bottom = 40.0

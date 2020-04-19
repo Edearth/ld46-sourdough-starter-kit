@@ -11,7 +11,8 @@ func advance_to_next_day():
 	for body in get_overlapping_bodies():
 		if "Particle" in body.name:
 			if "Air" in body.name:
-				deleteParticle(body)
+				if randi()%2:
+					deleteParticle(body)
 			reparentParticle(body, self)
 			if "Slurry" in body.name:
 				slurryParticles.append(body)
@@ -19,6 +20,13 @@ func advance_to_next_day():
 		var instance = airParticle.instance()
 		self.add_child(instance)
 		instance.global_position = slurry.global_position
+
+func get_slurry_particles():
+	var slurries = []
+	for body in get_overlapping_bodies():
+		if "Particle" in body.name and "Slurry" in body.name:
+			slurries.append(body)
+	return slurries
 
 func deleteParticle(body):
 	body.queue_free()
