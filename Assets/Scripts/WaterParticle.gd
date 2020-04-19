@@ -10,7 +10,7 @@ func _ready():
 	
 func instantiateSlurryOverNode(node : Node2D):
 	var instance = slurryParticle.instance()
-	parent.add_child(instance)
+	get_parent().add_child(instance)
 	instance.global_position = node.global_position
 
 func transformParticlesInSlurries(body1, body2):

@@ -7,6 +7,7 @@
 [sub_resource type="PhysicsMaterial" id=1]
 
 [node name="Container" type="RigidBody2D"]
+z_index = -2
 mass = 0.1
 physics_material_override = SubResource( 1 )
 gravity_scale = 10.0
@@ -17,6 +18,7 @@ SNAP_TO_DRAG_FORCE = 50.0
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.75, 0.75 )
+z_index = -2
 texture = ExtResource( 2 )
 script = ExtResource( 3 )
 

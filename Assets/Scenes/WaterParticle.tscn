@@ -8,10 +8,11 @@
 radius = 5.0
 
 [node name="WaterParticle" type="RigidBody2D"]
-z_index = 2
+z_index = -1
 collision_layer = 17
 mass = 0.00102041
 gravity_scale = 20.0
+continuous_cd = 1
 contacts_reported = 1
 contact_monitor = true
 script = ExtResource( 1 )
@@ -21,8 +22,8 @@ slurryParticle = ExtResource( 2 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 0.0588235, 0.509804, 0.87451, 0.392157 )
-z_index = 2
+modulate = Color( 0.12, 0.68, 0.93, 0.5 )
+z_index = 1
 texture = ExtResource( 3 )
 [connection signal="body_entered" from="." to="." method="_on_WaterParticle_body_entered"]
 [connection signal="input_event" from="." to="." method="_on_WaterParticle_input_event"]
