@@ -1,16 +1,20 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Assets/Scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/background.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Scenes/Clock.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Assets/Scenes/Container.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Assets/Scripts/ContentSpawner.gd" type="Script" id=5]
-[ext_resource path="res://Assets/Scenes/FlourParticle.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Assets/Scenes/WaterParticle.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Assets/Sprites/shadow.png" type="Texture" id=8]
-[ext_resource path="res://Assets/Scripts/ShadowMovement.gd" type="Script" id=9]
-[ext_resource path="res://Assets/Scripts/InsideContainer.gd" type="Script" id=10]
-[ext_resource path="res://Assets/Scenes/AirParticle.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Assets/Scripts/CleaningArea.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Scenes/Clock.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Scenes/Container.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Scripts/ContentSpawner.gd" type="Script" id=6]
+[ext_resource path="res://Assets/Scenes/FlourParticle.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Assets/Scenes/WaterParticle.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Assets/Sprites/shadow.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Scripts/ShadowMovement.gd" type="Script" id=10]
+[ext_resource path="res://Assets/Scripts/InsideContainer.gd" type="Script" id=11]
+[ext_resource path="res://Assets/Scenes/AirParticle.tscn" type="PackedScene" id=12]
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 600, 400 )
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 550, 100 )
@@ -24,6 +28,7 @@ bg_color = Color( 0.541176, 0.886275, 0.541176, 1 )
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
 _sourdoughParticleContainer = NodePath("EmptyContainer/InsideContainer")
+_strayParticleCleaner = NodePath("CleaningArea")
 _yeastCounter = NodePath("UI/YeastCounter")
 
 [node name="Background" type="Sprite" parent="."]
@@ -31,74 +36,93 @@ z_index = -10
 texture = ExtResource( 2 )
 centered = false
 
-[node name="Clock" parent="." instance=ExtResource( 3 )]
+[node name="CleaningArea" type="Area2D" parent="."]
+editor/display_folded = true
+position = Vector2( 498.461, 348.677 )
+collision_layer = 0
+collision_mask = 16
+script = ExtResource( 3 )
+_insideContainer = NodePath("../EmptyContainer/InsideContainer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CleaningArea"]
+position = Vector2( 23.4906, -173.243 )
+shape = SubResource( 4 )
+
+[node name="Clock" parent="." instance=ExtResource( 4 )]
 position = Vector2( 780, 120 )
 _game = NodePath("..")
 
-[node name="EmptyContainer" parent="." instance=ExtResource( 4 )]
-editor/display_folded = true
+[node name="EmptyContainer" parent="." instance=ExtResource( 5 )]
 position = Vector2( 170, 350 )
 
 [node name="flour" type="Node2D" parent="EmptyContainer"]
-script = ExtResource( 5 )
-particleType = ExtResource( 6 )
+script = ExtResource( 6 )
+particleType = ExtResource( 7 )
 
 [node name="water" type="Node2D" parent="EmptyContainer"]
-script = ExtResource( 5 )
-particleType = ExtResource( 7 )
+script = ExtResource( 6 )
+particleType = ExtResource( 8 )
 
 [node name="Shadow" type="Sprite" parent="EmptyContainer"]
 position = Vector2( 0, 90 )
 z_index = -1
-texture = ExtResource( 8 )
-script = ExtResource( 9 )
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
 FIXED_HEIGHT = 450.0
 
 [node name="InsideContainer" type="Area2D" parent="EmptyContainer"]
-script = ExtResource( 10 )
-airParticle = ExtResource( 11 )
+collision_mask = 17
+script = ExtResource( 11 )
+airParticle = ExtResource( 12 )
 
 [node name="InsideContainerPolygon" type="CollisionPolygon2D" parent="EmptyContainer/InsideContainer"]
 polygon = PoolVector2Array( -61.1342, -70.3316, -67.6185, -60.6051, -67.6185, 76.6463, -60.5938, 86.9131, 61.5276, 86.3728, 68.5522, 74.4849, 68.0119, -61.6859, 60.4469, -70.872 )
 
-[node name="FlourContainer" parent="." instance=ExtResource( 4 )]
+[node name="FlourContainer" parent="." instance=ExtResource( 5 )]
+editor/display_folded = true
 visible = false
 position = Vector2( 520, 350 )
 
 [node name="ContentSpawner" type="Node2D" parent="FlourContainer"]
 position = Vector2( 0, -10 )
-script = ExtResource( 5 )
-particleType = ExtResource( 6 )
+script = ExtResource( 6 )
+particleType = ExtResource( 7 )
 amount = 0.0
 
 [node name="Shadow" type="Sprite" parent="FlourContainer"]
 position = Vector2( 0, 90 )
 z_index = -1
-texture = ExtResource( 8 )
-script = ExtResource( 9 )
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
 FIXED_HEIGHT = 450.0
 
-[node name="WaterContainer" parent="." instance=ExtResource( 4 )]
+[node name="WaterContainer" parent="." instance=ExtResource( 5 )]
+editor/display_folded = true
 visible = false
 position = Vector2( 752.355, 350 )
 
 [node name="ContentSpawner" type="Node2D" parent="WaterContainer"]
 position = Vector2( 0, -10 )
-script = ExtResource( 5 )
-particleType = ExtResource( 7 )
+script = ExtResource( 6 )
+particleType = ExtResource( 8 )
 amount = 0.0
 
 [node name="Shadow" type="Sprite" parent="WaterContainer"]
 position = Vector2( 0, 90 )
 z_index = -1
-texture = ExtResource( 8 )
-script = ExtResource( 9 )
+texture = ExtResource( 9 )
+script = ExtResource( 10 )
 FIXED_HEIGHT = 450.0
 
 [node name="Boundaries" type="StaticBody2D" parent="."]
+editor/display_folded = true
 position = Vector2( 512, 550 )
 
 [node name="Table" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2( 0, -750 )
+shape = SubResource( 1 )
+
+[node name="Ceiling" type="CollisionShape2D" parent="Boundaries"]
 shape = SubResource( 1 )
 
 [node name="WallLeft" type="CollisionShape2D" parent="Boundaries"]
@@ -110,6 +134,7 @@ position = Vector2( 530, -380 )
 shape = SubResource( 2 )
 
 [node name="UI" type="Control" parent="."]
+editor/display_folded = true
 margin_left = 20.0
 margin_right = 40.0
 margin_bottom = 40.0

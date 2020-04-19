@@ -11,8 +11,8 @@ func advance_to_next_day():
 	for body in get_overlapping_bodies():
 		if "Particle" in body.name:
 			if "Air" in body.name:
-				if randi()%2:
-					deleteParticle(body)
+				pass#if randi()%2:
+				#deleteParticle(body)
 			reparentParticle(body, self)
 			if "Slurry" in body.name:
 				slurryParticles.append(body)

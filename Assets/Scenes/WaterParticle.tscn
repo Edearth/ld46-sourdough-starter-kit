@@ -9,6 +9,7 @@ radius = 5.0
 
 [node name="WaterParticle" type="RigidBody2D"]
 z_index = 2
+collision_layer = 17
 mass = 0.00102041
 gravity_scale = 20.0
 contacts_reported = 1

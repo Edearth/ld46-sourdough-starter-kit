@@ -13,9 +13,12 @@ func instantiateSlurryOverNode(node : Node2D):
 	parent.add_child(instance)
 	instance.global_position = node.global_position
 
+func transformParticlesInSlurries(body1, body2):
+	instantiateSlurryOverNode(body1)
+	body1.queue_free()
+	instantiateSlurryOverNode(body2)
+	body2.queue_free()
+
 func _on_WaterParticle_body_entered(body):
 	if "FlourParticle" in body.name:
-		instantiateSlurryOverNode(body)
-		body.queue_free()
-		instantiateSlurryOverNode(self)
-		self.queue_free()
+		call_deferred("transformParticlesInSlurries", body, self)
