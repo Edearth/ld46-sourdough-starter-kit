@@ -10,8 +10,8 @@ func _unhandled_input(event):
 			and event.is_pressed()
 			and not event.is_echo()
 			and event.button_index == BUTTON_LEFT):
-		var pos = global_position + offset - ( (texture.get_size() / 2.0) if centered else Vector2() )
-		if Rect2(pos, texture.get_size()).has_point(event.position):
+		var pos = global_position + (offset - ( (texture.get_size() / 2.0) if centered else Vector2() ) * scale)
+		if Rect2(pos, texture.get_size() * scale).has_point(event.position):
 			emit_signal("click")
 			dragging = true
 			get_tree().set_input_as_handled()

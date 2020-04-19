@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Assets/Scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/background.png" type="Texture" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Assets/Scenes/WaterParticle.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Assets/Sprites/shadow.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Scripts/ShadowMovement.gd" type="Script" id=9]
+[ext_resource path="res://Assets/Scripts/InsideContainer.gd" type="Script" id=10]
+[ext_resource path="res://Assets/Scenes/AirParticle.tscn" type="PackedScene" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 550, 100 )
@@ -16,8 +18,12 @@ extents = Vector2( 550, 100 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 30, 300 )
 
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.541176, 0.886275, 0.541176, 1 )
+
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
+_sourdoughParticleContainer = NodePath("EmptyContainer/InsideContainer")
 
 [node name="Background" type="Sprite" parent="."]
 z_index = -10
@@ -25,23 +31,44 @@ texture = ExtResource( 2 )
 centered = false
 
 [node name="Clock" parent="." instance=ExtResource( 3 )]
-position = Vector2( 780, 60 )
+position = Vector2( 780, 120 )
 _game = NodePath("..")
 
-[node name="FlourContainer" parent="." instance=ExtResource( 4 )]
+[node name="EmptyContainer" parent="." instance=ExtResource( 4 )]
+editor/display_folded = true
 position = Vector2( 170, 350 )
+
+[node name="flour" type="Node2D" parent="EmptyContainer"]
+script = ExtResource( 5 )
+particleType = ExtResource( 6 )
+
+[node name="water" type="Node2D" parent="EmptyContainer"]
+script = ExtResource( 5 )
+particleType = ExtResource( 7 )
+
+[node name="Shadow" type="Sprite" parent="EmptyContainer"]
+position = Vector2( 0, 90 )
+z_index = -1
+texture = ExtResource( 8 )
+script = ExtResource( 9 )
+FIXED_HEIGHT = 450.0
+
+[node name="InsideContainer" type="Area2D" parent="EmptyContainer"]
+script = ExtResource( 10 )
+airParticle = ExtResource( 11 )
+
+[node name="InsideContainerPolygon" type="CollisionPolygon2D" parent="EmptyContainer/InsideContainer"]
+polygon = PoolVector2Array( -61.1342, -70.3316, -67.6185, -60.6051, -67.6185, 76.6463, -60.5938, 86.9131, 61.5276, 86.3728, 68.5522, 74.4849, 68.0119, -61.6859, 60.4469, -70.872 )
+
+[node name="FlourContainer" parent="." instance=ExtResource( 4 )]
+editor/display_folded = true
+visible = false
+position = Vector2( 520, 350 )
 
 [node name="ContentSpawner" type="Node2D" parent="FlourContainer"]
 position = Vector2( 0, -10 )
 script = ExtResource( 5 )
 particleType = ExtResource( 6 )
-amount = 10.0
-
-[node name="ContentSpawner2" type="Node2D" parent="FlourContainer"]
-position = Vector2( 0, -10 )
-script = ExtResource( 5 )
-particleType = ExtResource( 7 )
-amount = 10.0
 
 [node name="Shadow" type="Sprite" parent="FlourContainer"]
 position = Vector2( 0, 90 )
@@ -51,6 +78,8 @@ script = ExtResource( 9 )
 FIXED_HEIGHT = 450.0
 
 [node name="WaterContainer" parent="." instance=ExtResource( 4 )]
+editor/display_folded = true
+visible = false
 position = Vector2( 752.355, 350 )
 
 [node name="ContentSpawner" type="Node2D" parent="WaterContainer"]
@@ -65,21 +94,42 @@ texture = ExtResource( 8 )
 script = ExtResource( 9 )
 FIXED_HEIGHT = 450.0
 
-[node name="Flour" type="Node2D" parent="."]
-
-[node name="Water" type="Node2D" parent="."]
-
-[node name="Table" type="StaticBody2D" parent="."]
-editor/display_folded = true
+[node name="Boundaries" type="StaticBody2D" parent="."]
 position = Vector2( 512, 550 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Table"]
+[node name="Table" type="CollisionShape2D" parent="Boundaries"]
 shape = SubResource( 1 )
 
-[node name="WallLeft" type="CollisionShape2D" parent="Table"]
+[node name="WallLeft" type="CollisionShape2D" parent="Boundaries"]
 position = Vector2( -530, -380 )
 shape = SubResource( 2 )
 
-[node name="WallRight" type="CollisionShape2D" parent="Table"]
+[node name="WallRight" type="CollisionShape2D" parent="Boundaries"]
 position = Vector2( 530, -380 )
 shape = SubResource( 2 )
+
+[node name="UI" type="Control" parent="."]
+editor/display_folded = true
+margin_left = 20.0
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="YeastCounterLabel" type="Label" parent="UI"]
+margin_top = 30.0
+margin_right = 40.0
+margin_bottom = 14.0
+hint_tooltip = "Mix flour and water, then wait to let the yeast multiply and grow"
+mouse_filter = 1
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Yeast counter"
+
+[node name="YeastCounter" type="ProgressBar" parent="UI"]
+margin_top = 50.0
+margin_right = 90.0
+margin_bottom = 64.0
+size_flags_horizontal = 3
+custom_styles/fg = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 0 )
+value = 30.0
