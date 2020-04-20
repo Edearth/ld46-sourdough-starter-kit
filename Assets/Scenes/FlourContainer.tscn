@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Scripts/DragWhileClicking.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Sprites/flour_bag.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Scripts/SpriteClickListener.gd" type="Script" id=3]
+
+[sub_resource type="PhysicsMaterial" id=1]
+
+[node name="Container" type="RigidBody2D"]
+z_index = -2
+mass = 0.1
+physics_material_override = SubResource( 1 )
+gravity_scale = 10.0
+continuous_cd = 1
+can_sleep = false
+script = ExtResource( 1 )
+SNAP_TO_DRAG_FORCE = 50.0
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.75, 0.75 )
+z_index = -2
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionPolygon2D" parent="."]
+scale = Vector2( 0.75, 0.75 )
+polygon = PoolVector2Array( 90, -120, 95, -85, 93.162, 90.8578, 85.7474, 120.516, -95.3821, 121.576, -100, 100, -95, -85, -75.2566, -119.401, -73.1381, -102.982, -84.7897, -71.2054, -89.5563, 95.0948, -80.5528, 107.276, 71.4477, 109.394, 77.8031, 84.5024, 72.5069, -53.728, 80, -95 )
+[connection signal="click" from="Sprite" to="." method="_on_Sprite_click"]
+[connection signal="release" from="Sprite" to="." method="_on_Sprite_release"]

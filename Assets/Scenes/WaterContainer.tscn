@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Scripts/DragWhileClicking.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Sprites/water_jar.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Scripts/SpriteClickListener.gd" type="Script" id=3]
+
+[sub_resource type="PhysicsMaterial" id=1]
+
+[node name="Container" type="RigidBody2D"]
+z_index = -2
+mass = 0.1
+physics_material_override = SubResource( 1 )
+gravity_scale = 10.0
+continuous_cd = 1
+can_sleep = false
+script = ExtResource( 1 )
+SNAP_TO_DRAG_FORCE = 50.0
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.75, 0.75 )
+z_index = -2
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionPolygon2D" parent="."]
+scale = Vector2( 0.75, 0.75 )
+polygon = PoolVector2Array( 43.4682, -116.856, 90.7632, -82.6431, 100, 100, 85, 125, -85, 125, -100, 100, -100.932, 46.6632, -62.1906, -14.2164, -62.6937, -49.9392, -89.36, -106.291, -87.3474, -114.844, -55.6498, -49.9392, -56.6561, -12.707, -89.36, 49.1789, -90, 100, -80, 115, 80, 115, 90, 100, 87.2412, 47.6695, 49.0028, -24.2792, 33.4055, -115.85 )
+[connection signal="click" from="Sprite" to="." method="_on_Sprite_click"]
+[connection signal="release" from="Sprite" to="." method="_on_Sprite_release"]

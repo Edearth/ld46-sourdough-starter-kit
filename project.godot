@@ -39,7 +39,7 @@ _global_script_class_icons={
 [application]
 
 config/name="LD46 - Sourdough starter kit"
-run/main_scene="res://Assets/Scenes/Game.tscn"
+run/main_scene="res://Assets/Scenes/Menu.tscn"
 config/icon="res://icon.png"
 
 [autoload]

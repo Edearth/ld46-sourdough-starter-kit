@@ -16,11 +16,10 @@ one_shot = true
 [node name="TextureButton" type="TextureButton" parent="."]
 margin_left = -100.0
 margin_top = -100.0
-margin_right = -7.62939e-06
-margin_bottom = -7.62939e-06
+margin_right = 100.0
+margin_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_scale = Vector2( 2, 2 )
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 2 )
 texture_pressed = ExtResource( 2 )

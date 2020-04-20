@@ -40,7 +40,7 @@ func advance_to_next_day():
 	yeastCount = min(yeastCount, len(slurries))
 	yeastCounter.value = yeastCount
 	
-	if true:#if (yeastCount >= 100):
+	if yeastCount >= 100:
 		finish_game()
 	else:
 		emit_signal("day_advance")

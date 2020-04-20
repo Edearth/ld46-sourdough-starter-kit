@@ -98,6 +98,7 @@ shape = SubResource( 1 )
 
 [node name="Clock" parent="." instance=ExtResource( 4 )]
 position = Vector2( 780, 120 )
+z_index = -9
 _game = NodePath("..")
 
 [node name="EmptyContainer" parent="." instance=ExtResource( 5 )]
